@@ -1,0 +1,46 @@
+Landsat notes:
+
+In order to complete the landsat analysis, I've decided to log what I have done in order to have
+documentation of the process required. 
+
+1) enter Earth Explorer and gather all the scenes that we require for our change analysis http://earthexplorer.usgs.gov/
+
+2) Following the Zhu and Woodcock methods, we select all scenes from 1984-2011 for landsat 5 ToA and BT, that has been
+corrected for atmospheric effects. 
+
+3) 	a)In the search criteria tab, select a date range (1-1-85, 11-30-11)
+	b)In Data Sets, go to the Landsat Archive tab and select L4-5 (info at https://lta.cr.usgs.gov/TM)
+	c)Additional criteria, set WRS path to 37 to 39, WRS row to 28 to 30 
+	d)Set cloud cover all?, ideally get L1T which is the highest level: http://landsat.usgs.gov/Landsat_Processing_Details.php
+	e)This should return some 3579 results...
+	f)We can then return and change cloud cover to less than 80% (based on Fmask results), which gives us 3496 results.
+		note) I used 1997-2011 to get 845 files
+
+4) Now export the results to a txt file (make sure you are logged in), and return non-limited results as csv
+	a) note, one needs to remove all the associated data and just request the name of the scene, rather than
+		the entire metadata file
+
+5) Go to the ESPA processing system from USGS, to obtained Level-1 products: http://espa.cr.usgs.gov/ordering/new
+
+6) 	a) Choose source products as input products and input product metadata
+	b) get the TOA, BT, CFMask, and surface reflectance
+	c) get all the indices
+	d) Customize to get HDF files, if necessary.
+	e) submit and wait for order to come in, should receive an email.
+
+7)	Now go to the site and copy the html source to get all the download urls (a href tags)
+
+8)	Once the html is parsed, use script to iterate over all the download url lists. 
+
+
+################################################
+
+9)	Once data is unzipped, the first technical steps can occur.
+
+Land cover reference
+
+1) 	I need to identify a land cover reference data to calibrate the data. I intend to use the National Land Cover Database (NLCD). from 1992, 2000, 2006, and 2011. 
+
+2)	NLCD needs to be clipped to our study area.
+
+3)	Use fmask to identify cloud and cloud shadows
